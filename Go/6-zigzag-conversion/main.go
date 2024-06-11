@@ -9,22 +9,15 @@ func convert(s string, numRows int) string {
 		return s
 	}
 
-	result := make([][]string, numRows)
+	result := make([]string, numRows)
 
-	char := 0
-	pointer := 0
-	col := 0
-	operator := true
+	char, pointer := 0, 0
+	operator := true // the pointer increases if true, decreases if false
 
-	for {
-		result[pointer] = append(result[pointer], string(s[char]))
+	for col := 0; char != len(s); col++ {
+		result[pointer] += string(s[char])
 		char++
 
-		if char == len(s) {
-			break
-		}
-
-		col++
 		if operator {
 			pointer++
 		} else {
@@ -39,11 +32,5 @@ func convert(s string, numRows int) string {
 		}
 	}
 
-	var str string
-
-	for _, v := range result {
-		str += strings.Join(v, "")
-	}
-
-	return str
+	return strings.Join(result, "")
 }
