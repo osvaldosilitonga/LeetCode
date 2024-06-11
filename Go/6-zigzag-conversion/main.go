@@ -11,12 +11,11 @@ func convert(s string, numRows int) string {
 
 	result := make([]string, numRows)
 
-	char, pointer := 0, 0
+	pointer := 0
 	operator := true // the pointer increases if true, decreases if false
 
-	for col := 0; char != len(s); col++ {
-		result[pointer] += string(s[char])
-		char++
+	for col := 0; col < len(s); col++ {
+		result[pointer] += string(s[col])
 
 		if operator {
 			pointer++
