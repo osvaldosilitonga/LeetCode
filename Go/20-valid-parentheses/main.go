@@ -1,39 +1,22 @@
 package validparentheses
 
-var openParentheses = map[rune]string{
-	'{': "cb",
-	'(': "rb",
-	'[': "sb",
-}
-
-var closeParentheses = map[rune]string{
-	'}': "cb",
-	')': "rb",
-	']': "sb",
-}
-
 func isValid(s string) bool {
-	var open []string
+	pairs := map[rune]rune{
+		'{': '}',
+		'[': ']',
+		'(': ')',
+	}
+	stack := []rune{}
 
 	for _, v := range s {
-		if opv, ok := openParentheses[v]; ok {
-			open = append(open, opv)
-		} else if val, ok := closeParentheses[v]; ok {
-			if len(open) == 0 {
-				return false
-			}
-
-			if val != open[len(open)-1] {
-				return false
-			} else {
-				open = open[:len(open)-1]
-			}
+		if _, ok := pairs[v]; ok {
+			stack = append(stack, v)
+		} else if len(stack) == 0 || pairs[stack[len(stack)-1]] != v {
+			return false
+		} else {
+			stack = stack[:len(stack)-1]
 		}
 	}
 
-	if len(open) != 0 {
-		return false
-	}
-
-	return true
+	return len(stack) == 0
 }
