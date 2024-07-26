@@ -31,3 +31,44 @@ func threeSum(nums []int) [][]int {
 
 	return result
 }
+
+// optimal solution. time complexity: O(n^2), space complexity: O(1)
+func threeSum2(nums []int) [][]int {
+	n := len(nums)
+
+	sort.Ints(nums)
+
+	result := [][]int{}
+	for i := 0; i < n-2; i++ {
+		// skip all duplicate from left
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+
+		j := i + 1
+		k := n - 1
+		for j < k {
+			sum := nums[i] + nums[j] + nums[k]
+
+			if sum == 0 {
+				r := []int{nums[i], nums[j], nums[k]}
+				result = append(result, r)
+
+				k--
+
+				// Skip all duplicates from right
+				for j < k && nums[k] == nums[k+1] {
+					k--
+				}
+			} else if sum > 0 {
+				//  decrement k to reduce sum value
+				k--
+			} else {
+				// increment j to increase sum value
+				j++
+			}
+		}
+	}
+
+	return result
+}

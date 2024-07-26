@@ -37,29 +37,43 @@ func TestThreeSum(t *testing.T) {
 		},
 	}
 
+	// Test for `threeSum` function
 	for _, v := range testCase {
 		t.Run(v.Description, func(t *testing.T) {
 			result := threeSum(v.Input)
 
-			if len(result) != len(v.Expected) {
-				t.Error(fmt.Sprintf("FAIL - %v", v.Description))
-			}
-
-			for _, rv := range result {
-				isContains := false
-				for _, ev := range v.Expected {
-					sort.Ints(rv)
-					sort.Ints(ev)
-
-					if reflect.DeepEqual(rv, ev) {
-						isContains = true
-					}
-				}
-
-				if isContains == false {
-					t.Error(fmt.Sprintf("FAIL - %v", v.Description))
-				}
-			}
+			resultCheck(t, v.Description, result, v.Expected)
 		})
+	}
+
+	// Test for `threeSum2` function
+	for _, v := range testCase {
+		t.Run(v.Description, func(t *testing.T) {
+			result := threeSum2(v.Input)
+
+			resultCheck(t, v.Description, result, v.Expected)
+		})
+	}
+}
+
+func resultCheck(t *testing.T, description string, result, expected [][]int) {
+	if len(result) != len(expected) {
+		t.Error(fmt.Sprintf("FAIL - %v", description))
+	}
+
+	for _, rv := range result {
+		isContains := false
+		for _, ev := range expected {
+			sort.Ints(rv)
+			sort.Ints(ev)
+
+			if reflect.DeepEqual(rv, ev) {
+				isContains = true
+			}
+		}
+
+		if isContains == false {
+			t.Error(fmt.Sprintf("FAIL - %v", description))
+		}
 	}
 }
